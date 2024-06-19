@@ -1,0 +1,54 @@
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #282c34;
+    color: white;
+}
+
+#container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#codeForm {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+#codeForm input {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 80%;
+}
+
+#codeForm button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#codeForm button:hover {
+    background: #0056b3;
+}
+
+#editorContainer {
+    background-color: #3b3f47;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
