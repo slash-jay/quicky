@@ -1,0 +1,7 @@
+<% include layout %>
+<h1>Text Editor</h1>
+<form action="/save" method="POST">
+    <input type="hidden" name="code" value="<%= entry.code %>">
+    <textarea name="text" rows="20" cols="100"><%= entry.text %></textarea>
+    <button type="submit">Save</button>
+</form>
