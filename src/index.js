@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const CryptoJS = require('crypto-js');
 const Code = require('./models/Code'); // Import the Code model
 
 const app = express();
@@ -21,6 +22,19 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
+const secretKey = 'your-secret-key'; // Use a strong secret key
+
+// Encrypt function
+function encrypt(text) {
+    return CryptoJS.AES.encrypt(text, secretKey).toString();
+}
+
+// Decrypt function
+function decrypt(ciphertext) {
+    const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+}
+
 // Routes
 // Render the index page with an empty code
 app.get('/', (req, res) => {
@@ -30,12 +44,14 @@ app.get('/', (req, res) => {
 // Handle submission of code from index page
 app.post('/submit', (req, res) => {
     const code = req.body.code;
-    res.redirect(`/code/${code}`);
+    const encryptedCode = encrypt(code); // Encrypt the code
+    res.redirect(`/code/${encodeURIComponent(encryptedCode)}`); // Use encodeURIComponent to safely handle the encrypted string
 });
 
 // Render the code page based on the provided code
-app.get('/code/:code', async (req, res) => {
-    const code = req.params.code;
+app.get('/code/:encryptedCode', async (req, res) => {
+    const encryptedCode = decodeURIComponent(req.params.encryptedCode); // Decode the encrypted string
+    const code = decrypt(encryptedCode); // Decrypt the code
     try {
         const existingCode = await Code.findOne({ code });
         if (existingCode) {
@@ -70,7 +86,7 @@ app.post('/save', async (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
