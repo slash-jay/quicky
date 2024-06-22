@@ -9,7 +9,7 @@ const app = express();
 const dbURI = 'mongodb+srv://jayashankar:F8B2irSrFapM4r5B@cluster0.yi5wzlq.mongodb.net/quicky?retryWrites=true&w=majority';
 
 // Connect to MongoDB
-mongoose.connect(dbURI)
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.error('MongoDB connection error:', err));
 
@@ -22,15 +22,18 @@ app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 
 // Routes
+// Render the index page with an empty code
 app.get('/', (req, res) => {
-    res.render('index', { code: '' });
+    res.render('index', { code: '' }); // Pass an empty string for code
 });
 
+// Handle submission of code from index page
 app.post('/submit', (req, res) => {
     const code = req.body.code;
     res.redirect(`/code/${code}`);
 });
 
+// Render the code page based on the provided code
 app.get('/code/:code', async (req, res) => {
     const code = req.params.code;
     try {
@@ -41,10 +44,12 @@ app.get('/code/:code', async (req, res) => {
             res.render('code', { code, text: '' });
         }
     } catch (error) {
+        console.error('Error fetching data:', error);
         res.status(500).send('Error fetching data');
     }
 });
 
+// Handle saving or updating code and text
 app.post('/save', async (req, res) => {
     const { code, text } = req.body;
     try {
@@ -56,8 +61,10 @@ app.post('/save', async (req, res) => {
             const newCode = new Code({ code, text });
             await newCode.save();
         }
-        res.send('Data saved successfully');
+        // Render index page again with an empty input field
+        res.render('index', { code: '' }); // Pass an empty string for code
     } catch (error) {
+        console.error('Error saving data:', error);
         res.status(500).send('Error saving data');
     }
 });

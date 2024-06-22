@@ -4,19 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quicky Code</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            border-radius: 10px;
+            animation: blink 2s infinite, gradient 5s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+         
+        input[type="text"] {
+            background-color: rgb(255, 255, 255);
+            color: black;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            background-color: white;
+        }
+
+        button {
+            margin-top: 30px;
+            background-color: #513999;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            animation: blink 2s infinite;
+        }
+
+        button:hover {
+            background-color: #301bb4;
+        }
+
+        /* Animation */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background: linear-gradient( #ffffff, #ff00ff);
+            }
+            20% {
+                background: linear-gradient( #ffffff, #ffff00);
+            }
+            40% {
+                background: linear-gradient(#ffffff, #00ff00); #0000ff, #ffff00, #ff00ff);
+            }
+            60% {
+                background: linear-gradient(#ffffff, #0000ff);
+            }
+            80% {
+                background: linear-gradient(#ffffff, #3f0e60);
+            }
+            100% {
+                background: linear-gradient(#ffffff, #c47010);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="background"></div>
+    
     <div class="container">
-        <h1>Quicky Code</h1>
-        <form action="/submit" method="POST">
-            <input type="text" name="code" value="<%= code %>" placeholder="Enter your code" required>
+        <h1 style="color: rgb(79, 8, 40);">#qUiCKY </h1>
+        <form id="codeForm" action="/submit" method="POST">
+            <input type="text" name="code" id="codeInput" placeholder="Quicky code">
+            <br>
             <button type="submit">Submit</button>
         </form>
-        <% if (code) { %>
-            <p>Entered Code: <%= code %></p>
-        <% } %>
     </div>
+
+    <!-- Three.js background -->
+   <!-- Three.js background -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+   <script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
+   <script src="https://threejs.org/examples/js/geometries/TextGeometry.js"></script>
+   <script>
+       // Setup Three.js scene
+       const scene = new THREE.Scene();
+       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+       const renderer = new THREE.WebGLRenderer();
+       renderer.setSize(window.innerWidth, window.innerHeight);
+       document.body.appendChild(renderer.domElement);
+
+       // Load font and create text particles
+       const loader = new THREE.FontLoader();
+       loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+           const particleCount = 100;
+           const particles = [];
+           const particleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+           for (let i = 0; i < particleCount; i++) {
+               const particleGeometry = new THREE.TextGeometry('#', {
+                   font: font,
+                   size: 1,
+                   height: 0.1,
+                   curveSegments: 12,
+               });
+
+               const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+               particle.position.set(Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, Math.random() * 2000 - 1000);
+               particle.scale.setScalar(Math.random() * 0.5 + 0.5);
+               scene.add(particle);
+               particles.push(particle);
+           }
+
+           // Camera positioning
+           camera.position.z = 5;
+
+           // Render loop
+           function animate() {
+               requestAnimationFrame(animate);
+
+               particles.forEach(particle => {
+                   particle.position.z += particle.scale.z * 0.05;
+                   particle.scale.multiplyScalar(1.01);
+
+                   if (particle.position.z > 10) {
+                       particle.position.set(Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, -1000);
+                       particle.scale.setScalar(Math.random() * 0.5 + 0.5);
+                   }
+               });
+
+               renderer.render(scene, camera);
+           }
+
+           animate();
+       });
+
+       // Adjust canvas size on window resize
+       window.addEventListener('resize', () => {
+           camera.aspect = window.innerWidth / window.innerHeight;
+           camera.updateProjectionMatrix();
+           renderer.setSize(window.innerWidth, window.innerHeight);
+       });
+   </script>
 </body>
 </html>
