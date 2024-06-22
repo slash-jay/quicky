@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quicky Code</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Quicky Code</h1>
+        <form action="/save" method="POST">
+            <input type="hidden" name="code" value="<%= code %>">
+            <p>Code: <%= code %></p>
+            <textarea name="text" rows="10" cols="50" placeholder="Enter your text here"><%= text %></textarea>
+            <br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</body>
+</html>
