@@ -1,0 +1,26 @@
+Quicky# Project Privacy Policy
+Welcome to Quicky# - the platform where you can freely create and manage your text pads. Below are the key points outlining our commitment to your privacy and data security:
+
+Free to Use, Always: Quicky# is free for everyone to use without any hidden costs or subscriptions.
+
+No Storage of Your Codes: We do not store your codes on our servers. Your pads are completely yours, and we have no access to their contents.
+
+End-to-End Encryption: Your pads are encrypted using keys that only you possess. In the unlikely event of a server compromise, your pads remain unreadable to anyone except you, as long as you have used unique and secure keys.
+
+Protection Against Government Requests: Even if compelled by legal authorities, your pads remain unreadable because only you hold the keys required for decryption.
+
+Content Independence: We do not monitor or review the content of your pads. You have complete freedom to store whatever you wish, as only you hold the encryption keys.
+
+Self-Management: You have full control over your pads. If you discover a pad containing sensitive information or intellectual property, you can delete or modify it at any time.
+
+User Responsibilities: While we strive to maintain security, we cannot be held responsible for:
+
+The use of simple and easily guessable codes like '0000' by users.
+Instances where another user accidentally accesses your pad by using the same un-guessable code.
+Disaster Recovery: While all data is backed up and replicated across multiple locations, unforeseen events such as natural disasters or hardware failures could potentially lead to the loss of all server and backup data.
+
+We are committed to providing you with a secure and private environment for managing your pads. If you have any questions or concerns about our privacy policy, please contact us.
+
+Thank you for choosing Quicky# for your pad management needs!
+
+This text aims to clearly communicate the privacy and security principles of the Quicky# project, ensuring users understand their rights and responsibilities when using the platform.
